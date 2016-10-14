@@ -4,17 +4,29 @@ var botID = process.env.BOT_ID;
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-      botRegex = /^\/Botman/;
+      botRegex = /^\/Botman /;
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
-    postMessage(request.text.replace(botRegex, ""));
+    postMessage(parsemessage(request.text.replace(botRegex, "")));
     this.res.end();
   } else {
     console.log("don't care");
     this.res.writeHead(200);
     this.res.end();
   }
+}
+
+function parsemessage(message) {
+  switch (message.split(" ")[0]) {
+    case "quote":
+      return message;
+    case "hello":
+      return "Hello";
+    default:
+      return "Umm that's weird. I don't know that command.";
+  }
+  return "Umm that's weird. I don't know that command.";
 }
 
 function postMessage(message) {
