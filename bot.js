@@ -8,7 +8,7 @@ function respond() {
 
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
-    postMessage(request.text);
+    postMessage(request.text.replace(botRegex, ""));
     this.res.end();
   } else {
     console.log("don't care");
